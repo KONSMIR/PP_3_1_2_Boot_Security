@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Info</title>
+</head>
+<body>
+
+<form action="/admin/saveEmployee" th:object="${employee}" method="post">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name"/>
+    <br>
+    <label for="surname">Enter surname: </label>
+    <input type="text" th:field="*{surname}" id="surname" placeholder="Surname"/>
+    <br>
+    <label for="department">Enter department: </label>
+    <input type="text" th:field="*{department}" id="department" placeholder="Department"/>
+    <br>
+    <label for="salary">Enter salary: </label>
+    <input type="text" th:field="*{salary}" id="salary" placeholder="Salary"/>
+    <br>
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password"/>
+    <br>
+    <label for="login">Enter login: </label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Login"/>
+    <br>
+    <br/>
+    <input type="submit" value="OK"/>
+
+    <br><br>
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="submit">LOGOUT</input>
+    </form>
+
+</form>
+
+</body>
+</html>
