@@ -46,12 +46,14 @@
     </tbody>
 
 </table>
-<input type="button" value="Add"
-       onclick="window.location.href = 'admin/addNewEmployee'"/>
+<form th:action="@{/admin/addNewEmployee}" th:method="GET">
+    <input type="submit" value="Add"/>
+</form>
+
 <br><br>
 <form th:action="@{/logout}" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <input type="submit">LOGOUT</input>
+    <input type="submit" value="Exit"/>
 </form>
 
 </body>

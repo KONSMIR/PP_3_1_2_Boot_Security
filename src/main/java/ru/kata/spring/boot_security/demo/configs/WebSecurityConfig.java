@@ -16,22 +16,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private EmployeeService employeeService;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, EmployeeService employeeService) {
         this.successUserHandler = successUserHandler;
-    }
-
-    @Autowired
-    public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .anyRequest().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/employee").hasRole("USER")
+                .antMatchers("/employee/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()

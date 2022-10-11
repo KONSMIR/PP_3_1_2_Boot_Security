@@ -17,4 +17,5 @@ public interface EmployeeService extends UserDetailsService {
     public void deleteEmployee(int id);
 
     public Employee findByLogin(String name);
+
 }

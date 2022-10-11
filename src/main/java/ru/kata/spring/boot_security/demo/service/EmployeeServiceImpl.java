@@ -6,6 +6,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -14,7 +16,6 @@ import ru.kata.spring.boot_security.demo.model.Employee;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +24,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
-    @Transactional
     public List<Employee> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
         return employees;
@@ -32,17 +36,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void saveEmployee(Employee employee) {
+        employee.setPassword(encoder().encode(employee.getPassword()));
         employeeRepository.save(employee);
     }
 
     @Override
     public Employee getEmployee(int id) {
-        Employee employee = null;
-        Optional<Employee> optional = employeeRepository.findById(id);
-        if (optional.isPresent()) {
-            employee = optional.get();
-        }
-        return employee;
+        return employeeRepository.getEmployeeById(id);
     }
 
     @Override

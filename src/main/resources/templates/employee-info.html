@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form action="/admin/saveEmployee" th:object="${employee}" method="post">
+<form th:action="@{/admin/saveEmployee}" th:object="${employee}" method="post">
 
     <input type="hidden" th:field="*{id}"/>
 
@@ -23,13 +23,24 @@
     <input type="text" th:field="*{salary}" id="salary" placeholder="Salary"/>
     <br>
     <label for="password">Enter password: </label>
-    <input type="text" th:field="*{password}" id="password" placeholder="Password"/>
+    <input type="password" th:field="*{password}" id="password" placeholder="Password"/>
     <br>
     <label for="login">Enter login: </label>
     <input type="text" th:field="*{login}" id="login" placeholder="Login"/>
     <br>
-    <br/>
+    <br>
+    <input type="checkbox" name="nameRole"
+           th:each="role: ${roles}"
+           th:value="${role}"
+           th:text="${role}">
+    <br>
+    <br>
     <input type="submit" value="OK"/>
+    <br>
+
+    <form th:action="@{/admin}" method="get">
+        <input type="submit" value="Back"/>
+    </form>
 
     <br><br>
     <form th:action="@{/logout}" method="post">
