@@ -44,6 +44,9 @@ public class AdminController {
 
     @GetMapping(value = "/updateInfo")
     public String updateEmployee(@RequestParam("empID") int id, Model model) {
+        if(employeeService.getEmployee(id) == null){
+            return "redirect:/admin";
+        }
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("employee", employeeService.getEmployee(id));
         return "employee-info";
@@ -51,7 +54,9 @@ public class AdminController {
 
     @GetMapping("/deleteEmployee")
     public String deleteEmployee(@RequestParam("empID") int id) {
-
+        if(employeeService.getEmployee(id) == null){
+            return "redirect:/admin";
+        }
         employeeService.deleteEmployee(id);
         return "redirect:/admin";
     }
